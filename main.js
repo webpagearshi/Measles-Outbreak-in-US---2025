@@ -28,21 +28,36 @@ function main() {
 
     const path = d3.geoPath().projection(projection);
     const tooltip = d3.select("#tooltip");
-    // Load GeoJSON and render map
-    d3.json("us-state-boundaries.geojson").then((geoData) => {
+    Promise.all([
+        d3.json("us-state-boundaries.geojson"),
+        d3.csv("outbreak-by-state.csv", (d) => ({
+            state: d.state,
+            year: +d.year,
+            cases: +d.cases,
+        })),
+    ]).then(([geoData, data]) => {
+        const year = 2025; // or 2024 if switching
+        const filtered = data.filter((d) => d.year === year);
+
+        const caseMap = new Map(filtered.map((d) => [d.state, d.cases]));
         svg.selectAll("path")
             .data(geoData.features)
             .enter()
             .append("path")
             .attr("d", path)
-            .attr("id", function (d, i) {
-                return "state" + d.properties.name;
+            .attr("fill", (d) => {
+                const state = d.properties.name;
+                const cases = caseMap.get(state);
+                return cases ? d3.interpolateReds(cases / 150) : "#eee";
             })
-            .attr("class", "state")
+            .attr("stroke", "#fff")
             .on("mouseover", function (event, d) {
+                const state = d.properties.name;
+                const cases = caseMap.get(state) || 0;
+
                 tooltip
                     .style("opacity", 1)
-                    .html(`<strong>${d.properties.name}</strong>`);
+                    .html(`<strong>${state}</strong><br/>Cases: ${cases}`);
                 d3.select(this).attr("fill", "#ffcc00");
             })
             .on("mousemove", function (event) {
@@ -52,9 +67,11 @@ function main() {
             })
             .on("mouseout", function () {
                 tooltip.style("opacity", 0);
-                d3.select(this).attr("fill", "#ccc");
+                d3.select(this).attr("fill", (d) => {
+                    const state = d.properties.name;
+                    const cases = caseMap.get(state);
+                    return cases ? d3.interpolateReds(cases / 150) : "#eee";
+                });
             });
-    }).catch((error) => {
-        console.error("Error loading GeoJSON:", error);
     });
 }
