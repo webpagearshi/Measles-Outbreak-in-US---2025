@@ -1,0 +1,73 @@
+#bar {
+    height: 15px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background-color: cornflowerblue;
+}
+#navbar {
+    background-color: rgb(18, 17, 17);
+    padding: 5px;
+    height: 40px;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+p.intro {
+    color: aliceblue;
+    font-family:
+        "Trebuchet MS",
+        "Lucida Sans Unicode",
+        "Lucida Grande",
+        "Lucida Sans",
+        Arial,
+        sans-serif;
+    font-size: 20px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+span.date {
+    color: aliceblue;
+    font-family:
+        "Trebuchet MS",
+        "Lucida Sans Unicode",
+        "Lucida Grande",
+        "Lucida Sans",
+        Arial,
+        sans-serif;
+    font-size: 20px;
+    margin-right: 30px;
+}
+#map {
+    padding: 30px;
+}
+#year-buttons {
+    text-align: center;
+}
+#year-buttons button {
+    margin: 10px;
+    padding: 0 12px;
+    font-size: 15px;
+    cursor: pointer;
+}
+#year-buttons .active {
+    background-color: #d33;
+    color: white;
+}
+.state {
+    fill: #d0d0d0; /*state colour */
+    stroke: #2a2c39; /* state border colour */
+    stroke-width: 1; /* state border width */
+}
+
+#tooltip {
+    position: absolute;
+    background: white;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
