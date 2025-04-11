@@ -48,9 +48,9 @@ function main() {
             .attr("fill", (d) => {
                 const state = d.properties.name;
                 const cases = caseMap.get(state);
-                return cases ? d3.interpolateReds(cases / 150) : "#eee";
+                return cases ? d3.interpolateYlGnBu(cases / 150) : "#eee";
             })
-            .attr("stroke", "#fff")
+            .attr("stroke", "#181818")
             .on("mouseover", function (event, d) {
                 const state = d.properties.name;
                 const cases = caseMap.get(state) || 0;
@@ -70,8 +70,9 @@ function main() {
                 d3.select(this).attr("fill", (d) => {
                     const state = d.properties.name;
                     const cases = caseMap.get(state);
-                    return cases ? d3.interpolateReds(cases / 150) : "#eee";
+                    return cases ? d3.interpolateYlGnBu(cases / 150) : "#eee";
                 });
             });
     });
+    S;
 }

@@ -40,19 +40,6 @@ span.date {
 #map {
     padding: 30px;
 }
-#year-buttons {
-    text-align: center;
-}
-#year-buttons button {
-    margin: 10px;
-    padding: 0 12px;
-    font-size: 15px;
-    cursor: pointer;
-}
-#year-buttons .active {
-    background-color: #d33;
-    color: white;
-}
 .state {
     fill: #d0d0d0; /*state colour */
     stroke: #2a2c39; /* state border colour */
@@ -70,4 +57,18 @@ span.date {
     opacity: 0;
     transition: opacity 0.2s ease;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+#year-buttons {
+    margin-bottom: 10px;
+    text-align: center;
+}
+#year-buttons button {
+    margin: 0 5px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+#year-buttons .active {
+    background-color: #d33;
+    color: white;
 }
