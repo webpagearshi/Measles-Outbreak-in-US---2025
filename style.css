@@ -38,28 +38,31 @@ span.date {
     margin-right: 30px;
 }
 #map {
-    padding: 30px;
+    padding-top: 10px;
+    text-align: center;
 }
 .state {
     fill: #d0d0d0; /*state colour */
     stroke: #2a2c39; /* state border colour */
     stroke-width: 1; /* state border width */
 }
-
 #tooltip {
     position: absolute;
     background: white;
-    padding: 6px 10px;
+    padding: 10px 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 13px;
+    border-radius: 10px;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    min-width: 80px;
 }
 #year-buttons {
-    margin-bottom: 10px;
+    padding-top: 10px;
     text-align: center;
 }
 #year-buttons button {

@@ -18,9 +18,9 @@ function main() {
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("background-color", "#f5f5f5")
-        .style("margin-top", 20);
-
+        .style("background-color", "#ffffff");
+    //style buttons
+    d3.selectAll("#year-buttons button").style("border-radius", "8px");
     const projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
         .scale(1000);
@@ -28,6 +28,10 @@ function main() {
     const path = d3.geoPath().projection(projection);
     const tooltip = d3.select("#tooltip");
 
+    // Build color scale
+    var myColor = d3.scaleSequential()
+        .interpolator(d3.interpolateInferno)
+        .domain([1, 0]);
     let geoData, outbreakData;
 
     // Load both datasets once
@@ -65,15 +69,15 @@ function main() {
                     .attr("d", path)
                     .attr("fill", (d) => {
                         const cases = caseMap.get(d.properties.name);
-                        return cases ? d3.interpolateGnBu(cases / 150) : "#eee";
+                        return cases ? myColor(cases / 150) : "#eee";
                     })
-                    .attr("stroke", "#181818"),
+                    .attr("stroke", "#AAA"),
             (update) =>
                 update
-                    .transition().duration(500)
+                    .transition().duration(1000)
                     .attr("fill", (d) => {
                         const cases = caseMap.get(d.properties.name);
-                        return cases ? d3.interpolateGnBu(cases / 150) : "#eee";
+                        return cases ? myColor(cases / 150) : "#eee";
                     }),
         )
             .on("mouseover", function (event, d) {
@@ -82,7 +86,7 @@ function main() {
                 tooltip
                     .style("opacity", 1)
                     .html(`<strong>${state}</strong><br/>Cases: ${cases}`);
-                d3.select(this).attr("fill", "#ffcc00");
+                d3.select(this).attr("fill", "#170fff");
             })
             .on("mousemove", function (event) {
                 tooltip
@@ -94,7 +98,7 @@ function main() {
                 const cases = caseMap.get(d.properties.name);
                 d3.select(this).attr(
                     "fill",
-                    cases ? d3.interpolateGnBu(cases / 150) : "#eee",
+                    cases ? myColor(cases / 150) : "#eee",
                 );
             });
     }
