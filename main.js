@@ -21,13 +21,16 @@ function main() {
         .style("background-color", "#f5f5f5")
         .style("margin-top", 20);
 
-    // Setup projection and path generator
     const projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
         .scale(1000);
 
     const path = d3.geoPath().projection(projection);
     const tooltip = d3.select("#tooltip");
+
+    let geoData, outbreakData;
+
+    // Load both datasets once
     Promise.all([
         d3.json("us-state-boundaries.geojson"),
         d3.csv("outbreak-by-state.csv", (d) => ({
@@ -35,26 +38,47 @@ function main() {
             year: +d.year,
             cases: +d.cases,
         })),
-    ]).then(([geoData, data]) => {
-        const year = 2025; // or 2024 if switching
-        const filtered = data.filter((d) => d.year === year);
+    ]).then(([geo, data]) => {
+        geoData = geo;
+        outbreakData = data;
+        drawMap(2025); // initial year
 
+        // Attach event listeners to year buttons
+        d3.selectAll("#year-buttons button").on("click", function () {
+            const selectedYear = +d3.select(this).attr("data-year");
+            d3.selectAll("#year-buttons button").classed("active", false);
+            d3.select(this).classed("active", true);
+            drawMap(selectedYear);
+        });
+    });
+
+    function drawMap(year) {
+        const filtered = outbreakData.filter((d) => d.year === year);
         const caseMap = new Map(filtered.map((d) => [d.state, d.cases]));
-        svg.selectAll("path")
-            .data(geoData.features)
-            .enter()
-            .append("path")
-            .attr("d", path)
-            .attr("fill", (d) => {
-                const state = d.properties.name;
-                const cases = caseMap.get(state);
-                return cases ? d3.interpolateGnBu(cases / 150) : "#eee";
-            })
-            .attr("stroke", "#181818")
+
+        const paths = svg.selectAll("path")
+            .data(geoData.features, (d) => d.properties.name);
+
+        paths.join(
+            (enter) =>
+                enter.append("path")
+                    .attr("d", path)
+                    .attr("fill", (d) => {
+                        const cases = caseMap.get(d.properties.name);
+                        return cases ? d3.interpolateGnBu(cases / 150) : "#eee";
+                    })
+                    .attr("stroke", "#181818"),
+            (update) =>
+                update
+                    .transition().duration(500)
+                    .attr("fill", (d) => {
+                        const cases = caseMap.get(d.properties.name);
+                        return cases ? d3.interpolateGnBu(cases / 150) : "#eee";
+                    }),
+        )
             .on("mouseover", function (event, d) {
                 const state = d.properties.name;
                 const cases = caseMap.get(state) || 0;
-
                 tooltip
                     .style("opacity", 1)
                     .html(`<strong>${state}</strong><br/>Cases: ${cases}`);
@@ -65,13 +89,13 @@ function main() {
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 20) + "px");
             })
-            .on("mouseout", function () {
+            .on("mouseout", function (event, d) {
                 tooltip.style("opacity", 0);
-                d3.select(this).attr("fill", (d) => {
-                    const state = d.properties.name;
-                    const cases = caseMap.get(state);
-                    return cases ? d3.interpolateGnBu(cases / 150) : "#eee";
-                });
+                const cases = caseMap.get(d.properties.name);
+                d3.select(this).attr(
+                    "fill",
+                    cases ? d3.interpolateGnBu(cases / 150) : "#eee",
+                );
             });
-    });
+    }
 }
