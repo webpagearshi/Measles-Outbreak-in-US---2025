@@ -37,7 +37,7 @@ span.date {
     font-size: 20px;
     margin-right: 30px;
 }
-#map {
+#map2 {
     padding-top: 10px;
     margin-left: 100px;
 }
@@ -45,6 +45,60 @@ span.date {
     fill: #d0d0d0; /*state colour */
     stroke: #2a2c39; /* state border colour */
     stroke-width: 1; /* state border width */
+}
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #fff;
+}
+#map {
+    position: relative;
+}
+#map-holder {
+    width: 100%;
+    height: 600px;
+}
+#year-buttons {
+    text-align: center;
+    margin: 1rem;
+}
+#year-buttons button {
+    margin: 0 5px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border: none;
+    background-color: #eee;
+    cursor: pointer;
+}
+#year-buttons button.active {
+    background-color: #333;
+    color: #fff;
+}
+#tooltip {
+    position: absolute;
+    background: white;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.scroll-text-container {
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    width: 300px;
+    font-size: 16px;
+    pointer-events: none;
+}
+.scroll-text {
+    display: none;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 #tooltip {
     position: absolute;

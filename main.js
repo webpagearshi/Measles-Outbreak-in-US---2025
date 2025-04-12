@@ -19,8 +19,10 @@ function main() {
         .attr("width", width)
         .attr("height", height)
         .style("background-color", "#ffffff");
-    //style buttons
+
+    // style buttons
     d3.selectAll("#year-buttons button").style("border-radius", "8px");
+
     const projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
         .scale(1000);
@@ -35,10 +37,7 @@ function main() {
 
     const legendSvg = svg.append("g")
         .attr("class", "legend")
-        .attr(
-            "transform",
-            `translate(${50}, ${20})`,
-        );
+        .attr("transform", `translate(${50}, ${20})`);
 
     const defs = svg.append("defs");
 
@@ -49,14 +48,14 @@ function main() {
         .attr("y1", "0%")
         .attr("y2", "0%");
 
-    // Add gradient stops (more = smoother)
     const steps = 10;
     for (let i = 0; i <= steps; i++) {
         const t = i / steps;
         gradient.append("stop")
             .attr("offset", `${t * 100}%`)
-            .attr("stop-color", myColor(t)); // ← reversed
+            .attr("stop-color", myColor(t));
     }
+
     legendSvg.append("rect")
         .attr("width", legendWidth)
         .attr("height", legendHeight)
@@ -64,7 +63,7 @@ function main() {
         .attr("stroke", "#aaa");
 
     const legendScale = d3.scaleLinear()
-        .domain([0, 150]) // reversed to match the scale
+        .domain([0, 150])
         .range([0, legendWidth]);
 
     const legendAxis = d3.axisBottom(legendScale)
@@ -81,7 +80,6 @@ function main() {
 
     let geoData, outbreakData;
 
-    // Load both datasets once
     Promise.all([
         d3.json("us-state-boundaries.geojson"),
         d3.csv("outbreak-by-state.csv", (d) => ({
@@ -92,7 +90,8 @@ function main() {
     ]).then(([geo, data]) => {
         geoData = geo;
         outbreakData = data;
-        drawMap(2024); // initial year
+        drawMap(2024);
+        updateText(2024);
 
         // Attach event listeners to year buttons
         d3.selectAll("#year-buttons button").on("click", function () {
@@ -100,6 +99,24 @@ function main() {
             d3.selectAll("#year-buttons button").classed("active", false);
             d3.select(this).classed("active", true);
             drawMap(selectedYear);
+            updateText(selectedYear);
+        });
+
+        // Mouse wheel interaction to toggle between years
+        let currentYear = 2024;
+        window.addEventListener("wheel", function (event) {
+            if (event.deltaY > 0 && currentYear === 2024) {
+                currentYear = 2025;
+            } else if (event.deltaY < 0 && currentYear === 2025) {
+                currentYear = 2024;
+            } else {
+                return;
+            }
+            drawMap(currentYear);
+            updateText(currentYear);
+            d3.selectAll("#year-buttons button").classed("active", false);
+            d3.select(`#year-buttons button[data-year='${currentYear}']`)
+                .classed("active", true);
         });
     });
 
@@ -148,5 +165,13 @@ function main() {
                     cases ? myColor(cases / 150) : "#eee",
                 );
             });
+    }
+
+    function updateText(year) {
+        d3.selectAll(".scroll-text").style("display", "none");
+        d3.select(`.scroll-text[data-year='${year}']`).style(
+            "display",
+            "block",
+        );
     }
 }
