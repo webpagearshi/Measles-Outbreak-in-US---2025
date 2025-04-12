@@ -6,31 +6,33 @@ Alaska,01-Sep,2,0,2025
 Arizona,01-Sep,6,0,2024
 Arizona,0,0,0,2025
 Arkansas,0,0,0,2024
-Arkansas,0,0,0,2025
+Arkansas,01-Sep,1,1,2025
 California,Oct-49,15,0,2024
-California,01-Sep,8,5,2025
+California,01-Sep,9,4,2025
 Colorado,0,0,0,2024
-Colorado,01-Sep,1,1,2025
+Colorado,01-Sep,3,3,2025
 Connecticut,0,0,0,2024
 Connecticut,0,0,0,2025
 Delaware,0,0,0,2024
 Delaware,0,0,0,2025
+District of Columbia,01-Sep,1,0,2024
+District of Columbia,0,0,0,2025
 Florida,Oct-49,13,0,2024
 Florida,01-Sep,1,0,2025
 Georgia,01-Sep,6,0,2024
 Georgia,01-Sep,3,0,2025
 Hawaii,0,0,0,2024
-Hawaii,0,0,0,2025
+Hawaii,01-Sep,1,1,2025
 Idaho,01-Sep,1,0,2024
 Idaho,0,0,0,2025
 Illinois,50-99,67,0,2024
 Illinois,0,0,0,2025
 Indiana,01-Sep,1,0,2024
-Indiana,0,0,0,2025
+Indiana,01-Sep,6,6,2025
 Iowa,0,0,0,2024
 Iowa,0,0,0,2025
 Kansas,0,0,0,2024
-Kansas,Oct-49,24,20,2025
+Kansas,Oct-49,32,26,2025
 Kentucky,0,0,0,2024
 Kentucky,01-Sep,2,1,2025
 Louisiana,01-Sep,3,0,2024
@@ -38,11 +40,11 @@ Louisiana,0,0,0,2025
 Maine,0,0,0,2024
 Maine,0,0,0,2025
 Maryland,01-Sep,1,0,2024
-Maryland,01-Sep,3,3,2025
+Maryland,01-Sep,3,1,2025
 Massachusetts,01-Sep,1,0,2024
 Massachusetts,0,0,0,2025
 Michigan,01-Sep,7,0,2024
-Michigan,01-Sep,2,2,2025
+Michigan,01-Sep,5,4,2025
 Minnesota,50-99,69,0,2024
 Minnesota,01-Sep,1,1,2025
 Mississippi,0,0,0,2024
@@ -60,21 +62,23 @@ New Hampshire,0,0,0,2025
 New Jersey,01-Sep,7,0,2024
 New Jersey,01-Sep,3,0,2025
 New Mexico,01-Sep,2,0,2024
-New Mexico,Oct-49,48,18,2025
-New York,01-Sep,15,0,2024
-New York,01-Sep,4,1,2025
+New Mexico,50-99,56,19,2025
+New York,01-Sep,1,0,2024
+New York,01-Sep,1,0,2025
+New York City,Oct-49,14,0,2024
+New York City,01-Sep,3,0,2025
 North Carolina,01-Sep,1,0,2024
 North Carolina,0,0,0,2025
 North Dakota,0,0,0,2024
 North Dakota,0,0,0,2025
 Ohio,01-Sep,7,0,2024
-Ohio,01-Sep,7,5,2025
+Ohio,Oct-49,21,19,2025
 Oklahoma,01-Sep,1,0,2024
-Oklahoma,01-Sep,8,6,2025
+Oklahoma,01-Sep,8,4,2025
 Oregon,Oct-49,31,0,2024
 Oregon,0,0,0,2025
 Pennsylvania,01-Sep,6,0,2024
-Pennsylvania,01-Sep,6,5,2025
+Pennsylvania,01-Sep,9,6,2025
 Rhode Island,0,0,0,2024
 Rhode Island,01-Sep,1,0,2025
 South Carolina,01-Sep,1,0,2024
@@ -84,15 +88,15 @@ South Dakota,0,0,0,2025
 Tennessee,01-Sep,4,0,2024
 Tennessee,01-Sep,4,4,2025
 Texas,01-Sep,1,0,2024
-Texas,250+,475,239,2025
+Texas,250+,532,226,2025
 Utah,0,0,0,2024
 Utah,0,0,0,2025
 Vermont,01-Sep,2,0,2024
-Vermont,01-Sep,1,1,2025
+Vermont,01-Sep,1,0,2025
 Virginia,01-Sep,1,0,2024
 Virginia,0,0,0,2025
 Washington,01-Sep,7,0,2024
-Washington,01-Sep,3,2,2025
+Washington,01-Sep,4,3,2025
 West Virginia,01-Sep,1,0,2024
 West Virginia,0,0,0,2025
 Wisconsin,01-Sep,1,0,2024
