@@ -25,13 +25,60 @@ function main() {
         .translate([width / 2, height / 2])
         .scale(1000);
 
-    const path = d3.geoPath().projection(projection);
-    const tooltip = d3.select("#tooltip");
-
     // Build color scale
     var myColor = d3.scaleSequential()
         .interpolator(d3.interpolateInferno)
         .domain([1, 0]);
+
+    const legendWidth = 300;
+    const legendHeight = 10;
+
+    const legendSvg = svg.append("g")
+        .attr("class", "legend")
+        .attr(
+            "transform",
+            `translate(${40}, ${20})`,
+        );
+
+    const defs = svg.append("defs");
+
+    const gradient = defs.append("linearGradient")
+        .attr("id", "legend-gradient")
+        .attr("x1", "0%")
+        .attr("x2", "100%")
+        .attr("y1", "0%")
+        .attr("y2", "0%");
+
+    // Add gradient stops (more = smoother)
+    const steps = 10;
+    for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        gradient.append("stop")
+            .attr("offset", `${t * 100}%`)
+            .attr("stop-color", myColor(1 + (100 - 1) * t)); // ← reversed
+    }
+    legendSvg.append("rect")
+        .attr("width", legendWidth)
+        .attr("height", legendHeight)
+        .style("fill", "url(#legend-gradient)")
+        .attr("stroke", "#999");
+
+    const legendScale = d3.scaleLinear()
+        .domain([100, 1]) // reversed to match the scale
+        .range([0, legendWidth]);
+
+    const legendAxis = d3.axisBottom(legendScale)
+        .ticks(5)
+        .tickFormat(d3.format("~s"));
+
+    legendSvg.append("g")
+        .attr("transform", `translate(0, ${legendHeight})`)
+        .call(legendAxis)
+        .select(".domain").remove();
+
+    const path = d3.geoPath().projection(projection);
+    const tooltip = d3.select("#tooltip");
+
     let geoData, outbreakData;
 
     // Load both datasets once
@@ -45,7 +92,7 @@ function main() {
     ]).then(([geo, data]) => {
         geoData = geo;
         outbreakData = data;
-        drawMap(2025); // initial year
+        drawMap(2024); // initial year
 
         // Attach event listeners to year buttons
         d3.selectAll("#year-buttons button").on("click", function () {
