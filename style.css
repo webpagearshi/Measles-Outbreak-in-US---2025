@@ -39,7 +39,7 @@ span.date {
 }
 #map {
     padding-top: 10px;
-    text-align: center;
+    margin-left: 100px;
 }
 .state {
     fill: #d0d0d0; /*state colour */
@@ -53,7 +53,7 @@ span.date {
     border: 1px solid #ccc;
     border-radius: 10px;
     font-family: "Segoe UI", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     pointer-events: none;
@@ -63,7 +63,7 @@ span.date {
 }
 #year-buttons {
     padding-top: 10px;
-    text-align: center;
+    margin-left: 50px;
 }
 #year-buttons button {
     margin: 0 5px;

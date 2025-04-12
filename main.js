@@ -30,14 +30,14 @@ function main() {
         .interpolator(d3.interpolateInferno)
         .domain([1, 0]);
 
-    const legendWidth = 300;
-    const legendHeight = 10;
+    const legendWidth = 400;
+    const legendHeight = 15;
 
     const legendSvg = svg.append("g")
         .attr("class", "legend")
         .attr(
             "transform",
-            `translate(${legendWidth + 200}, ${20})`,
+            `translate(${50}, ${20})`,
         );
 
     const defs = svg.append("defs");
@@ -133,7 +133,7 @@ function main() {
                 tooltip
                     .style("opacity", 1)
                     .html(`<strong>${state}</strong><br/>Cases: ${cases}`);
-                d3.select(this).attr("fill", "#170fff");
+                d3.select(this).attr("fill", "cornflowerblue");
             })
             .on("mousemove", function (event) {
                 tooltip
