@@ -37,7 +37,7 @@ function main() {
         .attr("class", "legend")
         .attr(
             "transform",
-            `translate(${40}, ${20})`,
+            `translate(${legendWidth + 200}, ${20})`,
         );
 
     const defs = svg.append("defs");
@@ -55,16 +55,16 @@ function main() {
         const t = i / steps;
         gradient.append("stop")
             .attr("offset", `${t * 100}%`)
-            .attr("stop-color", myColor(1 + (100 - 1) * t)); // ← reversed
+            .attr("stop-color", myColor(t)); // ← reversed
     }
     legendSvg.append("rect")
         .attr("width", legendWidth)
         .attr("height", legendHeight)
         .style("fill", "url(#legend-gradient)")
-        .attr("stroke", "#999");
+        .attr("stroke", "#aaa");
 
     const legendScale = d3.scaleLinear()
-        .domain([100, 1]) // reversed to match the scale
+        .domain([0, 150]) // reversed to match the scale
         .range([0, legendWidth]);
 
     const legendAxis = d3.axisBottom(legendScale)
