@@ -12,7 +12,19 @@
     margin-left: -10px;
     margin-right: -10px;
 }
-p.intro {
+.intro strong {
+    font-family: "Merriweather", serif;
+    font-size: 28px;
+    color: #1a1a1a;
+}
+.intro em {
+    font-family: "Merriweather Sans", sans-serif;
+    font-size: 16px;
+    color: #555;
+    font-style: italic;
+}
+
+p.heading {
     color: aliceblue;
     font-family:
         "Trebuchet MS",
@@ -95,11 +107,21 @@ body {
 }
 .scroll-text {
     display: none;
+    opacity: 0;
+    transform: translateX(30px); /* Slide in from the right */
+    transition: opacity 0.6s ease, transform 0.6s ease;
     background: rgba(255, 255, 255, 0.95);
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
 }
+.scroll-text.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0); /* Slide into position */
+}
+
 #tooltip {
     position: absolute;
     background: white;

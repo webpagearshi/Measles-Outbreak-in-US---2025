@@ -8,12 +8,16 @@
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="https://unpkg.com/scrollama"></script>
         <script src="main.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Merriweather+Sans&display=swap"
+            rel="stylesheet"
+        >
     </head>
     <body onload="main()">
         <main>
             <section id="bar"></section>
             <section id="navbar">
-                <p style="text-align: left" class="intro">
+                <p style="text-align: left" class="heading">
                     Measles Outbreak in the US
                     <span style="float: right" class="date"> </span>
                 </p>
@@ -29,7 +33,7 @@
                 <div id="tooltip"></div>
                 <div class="scroll-text-container">
                     <div
-                        class="scroll-text"
+                        class="scroll-text active"
                         data-year="2024"
                         style="display: block"
                     >

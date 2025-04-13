@@ -168,10 +168,10 @@ function main() {
     }
 
     function updateText(year) {
-        d3.selectAll(".scroll-text").style("display", "none");
-        d3.select(`.scroll-text[data-year='${year}']`).style(
-            "display",
-            "block",
-        );
+        d3.selectAll(".scroll-text")
+            .classed("active", false);
+
+        d3.select(`.scroll-text[data-year='${year}']`)
+            .classed("active", true);
     }
 }
