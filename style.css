@@ -103,8 +103,7 @@ body {
     margin: 5px;
     padding: 8px 14px;
     font-size: 14px;
-    border: none;
-    background-color: #eee;
+    background-color: #d0d0d0;
     cursor: pointer;
 }
 #year-buttons button.active {
