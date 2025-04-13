@@ -18,7 +18,7 @@ function main() {
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("background-color", "#ffffff");
+        .style("background-color", "#f8f4f0");
 
     // style buttons
     d3.selectAll("#year-buttons button").style("border-radius", "8px");
