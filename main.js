@@ -37,7 +37,7 @@ function main() {
 
     const legendSvg = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${50}, ${20})`);
+        .attr("transform", `translate(${50}, ${0})`);
 
     const defs = svg.append("defs");
 
