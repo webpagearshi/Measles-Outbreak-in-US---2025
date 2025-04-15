@@ -6,7 +6,6 @@ function main() {
 
     const width = 900;
     const height = 600;
-    let currentView = "us";
 
     const svg = d3.select("#map-holder")
         .append("svg")
@@ -123,20 +122,9 @@ function main() {
             })
             .onStepEnter((response) => {
                 const mapType = d3.select(response.element).attr("data-map");
-
-                if (mapType === "texas" && currentView !== "texas") {
+                if (mapType === "texas") {
                     drawTexasMap();
                     showTexasScrollText();
-                    currentView = "texas";
-                } else if (mapType !== "texas" && currentView !== "us") {
-                    drawMap(2025); // or default to latest view
-                    updateText(2025);
-                    d3.select(".scroll-text-container").style(
-                        "display",
-                        "block",
-                    );
-                    d3.select("#texas-scroll-text").style("display", "none");
-                    currentView = "us";
                 }
             });
     });

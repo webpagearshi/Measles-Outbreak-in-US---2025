@@ -176,6 +176,7 @@ body {
 }
 .scroll-step {
     height: 60vh; /* Full screen height to create a scrolly step */
+    margin: 0 auto;
     width: 100%;
     background: transparent;
 }
