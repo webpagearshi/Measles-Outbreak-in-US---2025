@@ -1,18 +1,12 @@
 function main() {
-    //d3 code goes here
-
-    //add current date to the top right corner of nav bar
-    // Get the current date
     const currentDate = new Date();
-    // Create a formatter for the desired format (e.g., DD-MM-YYYY)Month is in String format
     const dateFormat = d3.timeFormat("%d-%b-%Y");
-    // Format the current date
     const formattedDate = dateFormat(currentDate);
-    // Insert the formatted date into an HTML element (span in this case)
     d3.select("span.date").text("Date: " + formattedDate);
 
     const width = 900;
     const height = 600;
+    let currentView = "us";
 
     const svg = d3.select("#map-holder")
         .append("svg")
@@ -20,15 +14,15 @@ function main() {
         .attr("height", height)
         .style("background-color", "#f8f4f0");
 
-    // style buttons
-    d3.selectAll("#year-buttons button").style("border-radius", "8px");
+    const tooltip = d3.select("#tooltip");
 
     const projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2])
         .scale(1000);
 
-    // Build color scale
-    var myColor = d3.scaleSequential()
+    const path = d3.geoPath().projection(projection);
+
+    const myColor = d3.scaleSequential()
         .interpolator(d3.interpolateInferno)
         .domain([1, 0]);
 
@@ -37,20 +31,17 @@ function main() {
 
     const legendSvg = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${50}, ${0})`);
+        .attr("transform", `translate(50, 0)`);
 
     const defs = svg.append("defs");
 
     const gradient = defs.append("linearGradient")
         .attr("id", "legend-gradient")
-        .attr("x1", "0%")
-        .attr("x2", "100%")
-        .attr("y1", "0%")
-        .attr("y2", "0%");
+        .attr("x1", "0%").attr("x2", "100%")
+        .attr("y1", "0%").attr("y2", "0%");
 
-    const steps = 10;
-    for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
+    for (let i = 0; i <= 10; i++) {
+        const t = i / 10;
         gradient.append("stop")
             .attr("offset", `${t * 100}%`)
             .attr("stop-color", myColor(t));
@@ -62,23 +53,20 @@ function main() {
         .style("fill", "url(#legend-gradient)")
         .attr("stroke", "#aaa");
 
-    const legendScale = d3.scaleLinear()
-        .domain([0, 150])
-        .range([0, legendWidth]);
-
-    const legendAxis = d3.axisBottom(legendScale)
-        .ticks(5)
-        .tickFormat(d3.format("~s"));
+    const legendScale = d3.scaleLinear().domain([0, 150]).range([
+        0,
+        legendWidth,
+    ]);
+    const legendAxis = d3.axisBottom(legendScale).ticks(5).tickFormat(
+        d3.format("~s"),
+    );
 
     legendSvg.append("g")
         .attr("transform", `translate(0, ${legendHeight})`)
         .call(legendAxis)
         .select(".domain").remove();
 
-    const path = d3.geoPath().projection(projection);
-    const tooltip = d3.select("#tooltip");
-
-    let geoData, outbreakData;
+    let geoData, outbreakData, texasGeoData, texasCountyData;
 
     Promise.all([
         d3.json("us-state-boundaries.geojson"),
@@ -87,13 +75,20 @@ function main() {
             year: +d.year,
             cases: +d.cases,
         })),
-    ]).then(([geo, data]) => {
-        geoData = geo;
-        outbreakData = data;
+        d3.json("tx_counties.geojson"),
+        d3.csv("measles-outbreak-by-texas-county.csv", (d) => ({
+            county: d.county,
+            cases: +d.cases,
+        })),
+    ]).then(([usGeo, usData, txGeo, txData]) => {
+        geoData = usGeo;
+        outbreakData = usData;
+        texasGeoData = txGeo;
+        texasCountyData = txData;
+
         drawMap(2024);
         updateText(2024);
 
-        // Attach event listeners to year buttons
         d3.selectAll("#year-buttons button").on("click", function () {
             const selectedYear = +d3.select(this).attr("data-year");
             d3.selectAll("#year-buttons button").classed("active", false);
@@ -102,25 +97,53 @@ function main() {
             updateText(selectedYear);
         });
 
-        // Mouse wheel interaction to toggle between years
         let currentYear = 2024;
         window.addEventListener("wheel", function (event) {
             if (event.deltaY > 0 && currentYear === 2024) {
                 currentYear = 2025;
             } else if (event.deltaY < 0 && currentYear === 2025) {
                 currentYear = 2024;
-            } else {
-                return;
-            }
+            } else return;
+
             drawMap(currentYear);
             updateText(currentYear);
             d3.selectAll("#year-buttons button").classed("active", false);
             d3.select(`#year-buttons button[data-year='${currentYear}']`)
                 .classed("active", true);
         });
+
+        // Scrollama setup
+        const scroller = scrollama();
+
+        scroller
+            .setup({
+                step: ".scroll-step",
+                offset: 0.5,
+                debug: false,
+            })
+            .onStepEnter((response) => {
+                const mapType = d3.select(response.element).attr("data-map");
+
+                if (mapType === "texas" && currentView !== "texas") {
+                    drawTexasMap();
+                    showTexasScrollText();
+                    currentView = "texas";
+                } else if (mapType !== "texas" && currentView !== "us") {
+                    drawMap(2025); // or default to latest view
+                    updateText(2025);
+                    d3.select(".scroll-text-container").style(
+                        "display",
+                        "block",
+                    );
+                    d3.select("#texas-scroll-text").style("display", "none");
+                    currentView = "us";
+                }
+            });
     });
 
     function drawMap(year) {
+        d3.select("#texas-scroll-text").style("display", "none");
+
         const filtered = outbreakData.filter((d) => d.year === year);
         const caseMap = new Map(filtered.map((d) => [d.state, d.cases]));
 
@@ -137,8 +160,7 @@ function main() {
                     })
                     .attr("stroke", "#AAA"),
             (update) =>
-                update
-                    .transition().duration(1000)
+                update.transition().duration(1000)
                     .attr("fill", (d) => {
                         const cases = caseMap.get(d.properties.name);
                         return cases ? myColor(cases / 150) : "#eee";
@@ -147,8 +169,7 @@ function main() {
             .on("mouseover", function (event, d) {
                 const state = d.properties.name;
                 const cases = caseMap.get(state) || 0;
-                tooltip
-                    .style("opacity", 1)
+                tooltip.style("opacity", 1)
                     .html(`<strong>${state}</strong><br/>Cases: ${cases}`);
                 d3.select(this).attr("fill", "cornflowerblue");
             })
@@ -167,11 +188,70 @@ function main() {
             });
     }
 
+    function drawTexasMap() {
+        svg.selectAll("path").remove();
+        d3.select(".scroll-text-container").style("display", "none");
+        d3.select("#texas-scroll-text").style("display", "block");
+
+        // Normalize names to lowercase and remove " county"
+        const normalize = (name) =>
+            name.toLowerCase().replace(" county", "").trim();
+
+        const caseMap = new Map(
+            texasCountyData.map((d) => [normalize(d.county), +d.cases]),
+        );
+
+        const projection = d3.geoMercator().fitExtent(
+            [[50, 50], [width - 50, height - 100]], // padding inside the map
+            texasGeoData,
+        );
+
+        const path = d3.geoPath().projection(projection);
+
+        svg.selectAll("path")
+            .data(texasGeoData.features)
+            .join("path")
+            .attr("d", path)
+            .attr("fill", (d) => {
+                const countyName = normalize(d.properties.COUNTY);
+                const cases = caseMap.get(countyName);
+                return cases ? myColor(cases / 50) : "#eee";
+            })
+            .attr("stroke", "#999")
+            .on("mouseover", function (event, d) {
+                const county = d.properties.COUNTY;
+                const cases = caseMap.get(normalize(county)) || 0;
+                tooltip
+                    .style("opacity", 1)
+                    .html(`<strong>${county}</strong><br/>Cases: ${cases}`);
+            })
+            .on("mousemove", function (event) {
+                tooltip
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 20) + "px");
+            })
+            .on("mouseout", function () {
+                tooltip.style("opacity", 0);
+            });
+    }
+
     function updateText(year) {
-        d3.selectAll(".scroll-text")
+        d3.selectAll(".scroll-text").classed("active", false);
+        d3.select(`.scroll-text[data-year='${year}']`).classed("active", true);
+    }
+
+    function showTexasScrollText() {
+        // Hide US scroll text container
+        d3.select(".scroll-text-container").style("display", "none");
+
+        // Show Texas scroll text container
+        d3.select("#texas-scroll-text").style("display", "block");
+
+        // Reset and activate the first scroll text for Texas
+        d3.selectAll("#texas-scroll-text .scroll-text")
             .classed("active", false);
 
-        d3.select(`.scroll-text[data-year='${year}']`)
+        d3.select('#texas-scroll-text .scroll-text[data-county-step="1"]')
             .classed("active", true);
     }
 }
