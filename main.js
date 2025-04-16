@@ -181,12 +181,8 @@ function main() {
         d3.select(".scroll-text-container").style("display", "none");
         d3.select("#texas-scroll-text").style("display", "block");
 
-        // Normalize names to lowercase and remove " county"
-        const normalize = (name) =>
-            name.toLowerCase().replace(" county", "").trim();
-
         const caseMap = new Map(
-            texasCountyData.map((d) => [normalize(d.county), +d.cases]),
+            texasCountyData.map((d) => [d.county, d.cases]),
         );
 
         const projection = d3.geoMercator().fitExtent(
@@ -198,20 +194,22 @@ function main() {
 
         svg.selectAll("path")
             .data(texasGeoData.features)
-            .join("path")
+            .enter()
+            .append("path")
             .attr("d", path)
             .attr("fill", (d) => {
-                const countyName = normalize(d.properties.COUNTY);
-                const cases = caseMap.get(countyName);
+                const county = d.properties.NAME;
+                const cases = caseMap.get(county);
                 return cases ? myColor(cases / 50) : "#eee";
             })
             .attr("stroke", "#999")
             .on("mouseover", function (event, d) {
-                const county = d.properties.COUNTY;
-                const cases = caseMap.get(normalize(county)) || 0;
-                tooltip
-                    .style("opacity", 1)
-                    .html(`<strong>${county}</strong><br/>Cases: ${cases}`);
+                const county = d.properties.NAME;
+                const cases = caseMap.get(county) || 0;
+                tooltip.style("opacity", 1)
+                    .html(
+                        `<strong>${county} County</strong><br/>Cases: ${cases}`,
+                    );
             })
             .on("mousemove", function (event) {
                 tooltip
@@ -229,17 +227,13 @@ function main() {
     }
 
     function showTexasScrollText() {
-        // Hide US scroll text container
-        d3.select(".scroll-text-container").style("display", "none");
-
-        // Show Texas scroll text container
+        d3.selectAll(".scroll-text").classed("active", false);
         d3.select("#texas-scroll-text").style("display", "block");
-
-        // Reset and activate the first scroll text for Texas
-        d3.selectAll("#texas-scroll-text .scroll-text")
-            .classed("active", false);
-
-        d3.select('#texas-scroll-text .scroll-text[data-county-step="1"]')
+        d3.selectAll("#texas-scroll-text .scroll-text").classed(
+            "active",
+            false,
+        );
+        d3.select("#texas-scroll-text .scroll-text[data-county-step='1']")
             .classed("active", true);
     }
 }

@@ -174,13 +174,6 @@ body {
     transition: opacity 0.2s ease;
     min-width: 80px;
 }
-.scroll-step {
-    height: 60vh; /* Full screen height to create a scrolly step */
-    margin: 0 auto;
-    width: 100%;
-    background: transparent;
-}
-
 #texas-scroll-text {
     display: none;
     position: absolute;
@@ -205,4 +198,9 @@ body {
 #texas-scroll-text .scroll-text.active {
     opacity: 1;
     transform: translateX(0);
+}
+.scroll-step {
+    height: 10vh; /* Just enough to trigger Scrollama */
+    width: 100%;
+    background: transparent;
 }
