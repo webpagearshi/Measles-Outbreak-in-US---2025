@@ -121,10 +121,15 @@ function main() {
                 debug: false,
             })
             .onStepEnter((response) => {
-                const mapType = d3.select(response.element).attr("data-map");
+                const el = d3.select(response.element);
+                const mapType = el.attr("data-map");
+
                 if (mapType === "texas") {
                     drawTexasMap();
                     showTexasScrollText();
+
+                    // Shrink the scroll-step after triggering
+                    el.style("height", "1px"); // effectively removes scroll gap
                 }
             });
     });
@@ -181,8 +186,12 @@ function main() {
         d3.select(".scroll-text-container").style("display", "none");
         d3.select("#texas-scroll-text").style("display", "block");
 
+        // Normalize names to lowercase and remove " county"
+        const normalize = (name) =>
+            name.toLowerCase().replace(" county", "").trim();
+
         const caseMap = new Map(
-            texasCountyData.map((d) => [d.county, d.cases]),
+            texasCountyData.map((d) => [normalize(d.county), +d.cases]),
         );
 
         const projection = d3.geoMercator().fitExtent(
@@ -194,22 +203,20 @@ function main() {
 
         svg.selectAll("path")
             .data(texasGeoData.features)
-            .enter()
-            .append("path")
+            .join("path")
             .attr("d", path)
             .attr("fill", (d) => {
-                const county = d.properties.NAME;
-                const cases = caseMap.get(county);
+                const countyName = normalize(d.properties.COUNTY);
+                const cases = caseMap.get(countyName);
                 return cases ? myColor(cases / 50) : "#eee";
             })
             .attr("stroke", "#999")
             .on("mouseover", function (event, d) {
-                const county = d.properties.NAME;
-                const cases = caseMap.get(county) || 0;
-                tooltip.style("opacity", 1)
-                    .html(
-                        `<strong>${county} County</strong><br/>Cases: ${cases}`,
-                    );
+                const county = d.properties.COUNTY;
+                const cases = caseMap.get(normalize(county)) || 0;
+                tooltip
+                    .style("opacity", 1)
+                    .html(`<strong>${county}</strong><br/>Cases: ${cases}`);
             })
             .on("mousemove", function (event) {
                 tooltip

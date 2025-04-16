@@ -200,7 +200,7 @@ body {
     transform: translateX(0);
 }
 .scroll-step {
-    height: 10vh; /* Just enough to trigger Scrollama */
+    height: 20vh; /* Just enough to trigger Scrollama */
     width: 100%;
     background: transparent;
 }
