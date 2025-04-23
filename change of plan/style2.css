@@ -1,0 +1,206 @@
+#bar {
+    height: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background-color: cornflowerblue;
+}
+#navbar {
+    background-color: rgb(18, 17, 17);
+    padding: 5px;
+    height: 40px;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+#scroll-cue {
+    text-align: right;
+    padding-right: 20px;
+}
+.scroll-indicator {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    color: #666;
+    animation: fadeInUp 1.5s ease-out;
+    display: inline-block;
+}
+.scroll-indicator svg {
+    margin-top: 10px;
+    animation: bounce 2s infinite;
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(6px);
+    }
+}
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+#title-block {
+    text-align: center;
+    padding: 1rem 1rem 1rem;
+    margin-top: -30px;
+}
+.intro {
+    margin: 0 auto;
+    max-width: 600px;
+}
+.intro strong {
+    font-family: "Merriweather", serif;
+    font-size: 28px;
+    color: #1a1a1a;
+}
+.intro em {
+    font-family: "Merriweather Sans", sans-serif;
+    font-size: 16px;
+    color: #555;
+    font-style: italic;
+}
+
+p.heading {
+    color: aliceblue;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+span.date {
+    color: aliceblue;
+    margin-right: 30px;
+}
+
+.state {
+    fill: #d0d0d0; /*state colour */
+    stroke: #2a2c39; /* state border colour */
+    stroke-width: 1; /* state border width */
+}
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #f8f4f0;
+}
+#map {
+    position: relative;
+}
+#map-holder {
+    width: 100%;
+    height: 550px;
+    margin-left: 100px;
+}
+
+#year-buttons {
+    text-align: center;
+    margin: 2px;
+}
+#year-buttons button {
+    margin: 5px;
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #d0d0d0;
+    cursor: pointer;
+}
+#year-buttons button.active {
+    background-color: #333;
+    color: #fff;
+}
+#tooltip {
+    position: absolute;
+    background: white;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.scroll-text-container {
+    position: absolute;
+    top: 120px;
+    right: 40px;
+    width: 300px;
+    font-size: 16px;
+    pointer-events: none;
+    margin-right: 75px;
+}
+.scroll-text {
+    display: none;
+    opacity: 0;
+    transform: translateX(30px); /* Slide in from the right */
+    transition: opacity 0.8s ease, transform 0.9s ease;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+    margin-top: 1.5rem; /* ⬅ Adds vertical spacing between blocks */
+}
+.scroll-text h2 {
+    font-family: "Merriweather", serif;
+    font-weight: 800;
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.scroll-text p {
+    font-size: 14px;
+}
+
+.scroll-text.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0); /* Slide into position */
+}
+
+#tooltip {
+    position: absolute;
+    background: white;
+    padding: 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    min-width: 80px;
+}
+#texas-scroll-text {
+    display: none;
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    width: 300px;
+    font-size: 16px;
+    pointer-events: none;
+}
+#texas-scroll-text .scroll-text {
+    font-family: "DM Sans", sans-serif;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    pointer-events: auto;
+    margin-top: 1rem;
+}
+#texas-scroll-text .scroll-text.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+.scroll-step {
+    height: 60vh; /* Just enough to trigger Scrollama */
+    width: 100%;
+    background: transparent;
+}

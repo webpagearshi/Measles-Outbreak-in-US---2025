@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Measles Outbreak 2025</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://unpkg.com/scrollama"></script>
+        <script src="main.js" defer></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=DM+Sans:wght@400;500&display=swap"
+            rel="stylesheet"
+        >
+    </head>
+    <body onload="main()">
+        <main>
+            <section id="bar"></section>
+
+            <section id="navbar">
+                <p
+                    class="heading"
+                    style="text-align: left; font-size: 16px; font-family: Merriweather, serif"
+                >
+                    Measles Outbreak in the US
+                    <span class="date" style="float: right; font-size: 16px">
+                    </span>
+                </p>
+            </section>
+
+            <section id="scroll-cue">
+                <div class="scroll-indicator">
+                    <span>Scroll to explore</span>
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M12 4V20M12 20L5 13M12 20L19 13"
+                            stroke="#888"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+            </section>
+
+            <section id="title-block">
+                <p class="intro">
+                    <strong>Tracking the Measles Outbreak in US</strong>
+                    <br>
+                    <em>A closer look at the 2024–25 outbreak surge in the U.S.
+                        and Texas and what it reveals</em>
+                </p>
+            </section>
+            <section id="map">
+                <div id="year-buttons">
+                    <button type="button" data-year="2024" class="active">
+                        2024
+                    </button>
+                    <button type="button" data-year="2025">2025</button>
+                </div>
+
+                <div id="map-holder"></div>
+                <div id="tooltip"></div>
+
+                <!-- Scroll step to trigger Texas map -->
+                <div class="scroll-step" data-map="texas"></div>
+
+                <!-- US-level scroll text -->
+                <div class="scroll-text-container">
+                    <div
+                        class="scroll-text active"
+                        data-year="2024"
+                        style="display: block"
+                    >
+                        <h2>Measles cases in 2024</h2>
+                        <p>
+                            <strong>Total Cases:</strong>
+                            <span style="font-size: 18px">285</span>
+                        </p>
+                        <p>
+                            In 2024, cases began to rise in multiple states and
+                            16 outbreaks (defined as 3 or more related cases)
+                            were reported.
+                        </p>
+                    </div>
+                    <div class="scroll-text" data-year="2025">
+                        <h2>Escalation in 2025</h2>
+                        <p>
+                            <strong>Total Cases:</strong>
+                            <span style="font-size: 18px">712</span>
+                            <br>
+                            <em><span style="font-size: 12px"
+                                >**cases confirmed as of April 10, 2025</span
+                                ></em>
+                        </p>
+                        <p>
+                            By 2025, the outbreak has intensified and 93% of
+                            confirmed cases are outbreak-associated. There have
+                            been 2 confirmed deaths from measles.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Texas-level scroll text (initially hidden) -->
+                <div
+                    class="scroll-text-container"
+                    id="texas-scroll-text"
+                    style="display: none"
+                >
+                    <div class="scroll-text" data-county-step="1">
+                        <h2>Texas Takes the Spotlight</h2>
+                        <p>
+                            The outbreak in Texas escalated significantly,
+                            leading to focused public health responses.
+                        </p>
+                    </div>
+                    <div class="scroll-text" data-county-step="2">
+                        <h2>County Hotspots</h2>
+                        <p>
+                            Certain counties saw higher case loads, especially
+                            those with lower vaccination coverage. These areas
+                            became focal points for containment and education.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
