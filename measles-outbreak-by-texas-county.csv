@@ -1,23 +1,26 @@
 state,county,cases
-TX,Andrews County,1
+TX,Andrews County,3
+TX,Bailey County,2
 TX,Borden County,1
 TX,Brown County,1
-TX,Cochran County,11
+TX,Cochran County,14
 TX,Dallam County,7
-TX,Dawson County,21
-TX,Ector County,8
-TX,El Paso County,3
+TX,Dawson County,25
+TX,Ector County,10
+TX,El Paso County,32
 TX,Erath County,1
-TX,Gaines County,355
+TX,Gaines County,396
 TX,Garza County,2
 TX,Hale County,5
-TX,Hockley County,3
-TX,Lamar County,11
+TX,Hockley County,5
+TX,Lamar County,17
 TX,Lamb County,1
-TX,Lubbock County,38
+TX,Lubbock County,48
 TX,Lynn County,2
 TX,Martin County,3
-TX,Midland County,1
+TX,Midland County,3
+TX,Parmer County,4
+TX,Potter County,1
 TX,Randall County,1
-TX,Terry County,47
-TX,Yoakum County,18
+TX,Terry County,59
+TX,Yoakum County,19
