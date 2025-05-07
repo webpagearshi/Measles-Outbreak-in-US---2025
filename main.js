@@ -35,9 +35,9 @@ function main() {
 
         svg.append("g")
             .attr("transform", `translate(0,${height})`)
-            .call(d3.axisBottom(xTime).tickFormat(d3.timeFormat("%b %d")))
+            .call(d3.axisBottom(xTime).tickFormat(d3.timeFormat("%b %y")))
             .selectAll("text")
-            .attr("transform", "rotate(-45)")
+            .attr("transform", "rotate(-30)")
             .style("text-anchor", "end");
 
         svg.append("g").call(d3.axisLeft(y));
