@@ -4,6 +4,7 @@ body {
     /*background: #f8f4f0;*/
     background: #f9f9f9;
     padding: 20px;
+    max-width: 800px;
 }
 #header {
     background-color: #181818;
@@ -66,4 +67,22 @@ p {
     color: #000;
     z-index: 10;
     border-radius: 6px;
+}
+div {
+    max-width: 800px;
+}
+#choropleth-map {
+    max-width: 960px;
+    margin: 60px auto 0;
+}
+
+.tooltip-map {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid #444;
+    padding: 6px 10px;
+    pointer-events: none;
+    font-size: 13px;
+    color: #000;
+    border-radius: 5px;
 }
